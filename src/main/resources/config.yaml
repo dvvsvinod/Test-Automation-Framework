@@ -1,0 +1,8 @@
+appConfigData:
+  baseURI: https://google.com
+uiConfigData:
+  browserType: chrome
+  pageLoadTimeOut: 10
+  explicitWaitTimeOut: 60
+apiConfig:
+  baseURI:
