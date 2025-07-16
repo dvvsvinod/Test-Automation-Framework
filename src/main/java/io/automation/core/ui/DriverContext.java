@@ -20,6 +20,10 @@ public class DriverContext {
     public WebDriver getDriverInstance(){
         tWebDriver.set(this.executionStrategy.setupDriver());
         LOGGER.info("Current Thread :: {}",Thread.currentThread().getName()+" and Driver Reference is {}", tWebDriver.get());
+        return getDriver();
+    }
+
+    public static WebDriver getDriver(){
         return tWebDriver.get();
     }
 }
