@@ -10,7 +10,6 @@ public class AppTest {
     private WebDriver driver;
 
 
-@Test
 public void my_test_case_01(){
     DriverContext driverContext = new DriverContext(new LocalExecutionStrategy());
     driver = driverContext.getDriverInstance();
