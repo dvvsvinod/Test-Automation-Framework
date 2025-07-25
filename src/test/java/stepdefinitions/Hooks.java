@@ -1,6 +1,7 @@
 package stepdefinitions;
 
 import io.automation.core.ui.DriverContext;
+import io.automation.core.ui.HeadlessExecutionStrategy;
 import io.automation.core.ui.LocalExecutionStrategy;
 import io.automation.core.utils.ScreenshotUtil;
 import io.cucumber.java.After;
@@ -14,7 +15,7 @@ public class Hooks {
 
     @Before
     public void beforeScenario(){
-        DriverContext driverContext = new DriverContext(new LocalExecutionStrategy());
+        DriverContext driverContext = new DriverContext(new HeadlessExecutionStrategy());
         driver = driverContext.getDriverInstance();
     }
 

@@ -1,22 +1,17 @@
 pipeline {
-  agent any
-  stages {
-    stage('Build Docker Image') {
-      steps {
-        script {
-          dockerImage = docker.build("${IMAGE_NAME}")
-        }
-
+  agent {
+          docker {
+              image 'markhobson/maven-chrome:jdk-17'
+              args '-v /dev/shm:/dev/shm'
+          }
       }
-    }
+  stages {
+
 
     stage('Run inside Docker') {
       steps {
-        script {
-          dockerImage.inside('-v /dev/shm:/dev/shm') {
+            sh "java --version"
             sh "mvn clean test -DSuiteXmlFile='testng.xml' "
-          }
-        }
 
       }
     }
