@@ -9,7 +9,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the image from local Dockerfile
                     dockerImage = docker.build("${IMAGE_NAME}")
                 }
             }
