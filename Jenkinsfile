@@ -18,7 +18,6 @@ pipeline {
       steps {
         sh "docker run --rm ${env.CUSTOM_IMAGE} java -version"
         sh "docker run --rm ${env.CUSTOM_IMAGE} mvn -version"
-        sh "docker run --rm ${env.CUSTOM_IMAGE} docker --version"
         sh "docker run --rm ${env.CUSTOM_IMAGE} google-chrome --version"
       }
     }
