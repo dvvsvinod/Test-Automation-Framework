@@ -5,6 +5,3 @@ WORKDIR /app
 
 # Copy project files
 COPY . /app
-
-# Default command
-CMD ["mvn", "-version"]

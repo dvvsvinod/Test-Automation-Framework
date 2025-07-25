@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    CUSTOM_IMAGE = 'maven-java-docker-chrome:latest'
+    CUSTOM_IMAGE = 'maven-java-docker-chrome'
   }
 
   stages {
@@ -14,18 +14,14 @@ pipeline {
       }
     }
 
-    stage('Verify Custom Image') {
-      steps {
-        sh "docker run --rm ${env.CUSTOM_IMAGE} java -version"
-        sh "docker run --rm ${env.CUSTOM_IMAGE} mvn -version"
-        sh "docker run --rm ${env.CUSTOM_IMAGE} google-chrome --version"
-      }
-    }
 
     stage('Run Tests') {
       steps {
-        // Run your tests inside a container based on the built image
-        sh "docker run --platform linux/amd64 --rm -v \$PWD:/app -w /app ${env.CUSTOM_IMAGE} mvn clean test -DSuiteXmlFile=testng.xml"
+        script{
+         sh "docker run -it -v /var/jenkins_home/workspace/Selenium-Docker_master:/app -w /app ${env.CUSTOM_IMAGE} bash"
+         sh "mvn clean test -DSuiteXmlFile=testng.xml"
+        }
+
       }
     }
   }
