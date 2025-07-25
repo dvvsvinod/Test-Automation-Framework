@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'docker:20.10.7-dind'  // Docker CLI + daemon
-      args '-v /var/run/docker.sock:/var/run/docker.sock'
-    }
-  }
+  agent any
 
   environment {
     CUSTOM_IMAGE = 'local/maven-java-docker-chrome:latest'
