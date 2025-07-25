@@ -18,7 +18,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         script{
-          sh "docker run --rm -v /var/jenkins_home/workspace/Selenium-Docker_master:/app -w /app maven-java-docker-chrome mvn clean test"
+          sh "docker run --rm maven-java-docker-chrome mvn clean test"
         }
 
       }
