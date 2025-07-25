@@ -26,7 +26,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         // Run your tests inside a container based on the built image
-        sh "docker run --rm -v \$PWD:/app -w /app ${env.CUSTOM_IMAGE} mvn clean test -DSuiteXmlFile=testng.xml"
+        sh "docker run --platform linux/amd64 --rm -v \$PWD:/app -w /app ${env.CUSTOM_IMAGE} mvn clean test -DSuiteXmlFile=testng.xml"
       }
     }
   }
