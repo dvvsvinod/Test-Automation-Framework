@@ -1,42 +1,40 @@
 pipeline {
-    agent any
+  agent any
+  stages {
+    stage('Build Docker Image') {
+      steps {
+        script {
+          dockerImage = docker.build("${IMAGE_NAME}")
+        }
 
-    environment {
-        IMAGE_NAME = 'my-maven-chrome-image'
+      }
     }
 
-    stages {
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    dockerImage = docker.build("${IMAGE_NAME}")
-                }
-            }
-        }
-
-        stage('Checkout Code') {
-            steps {
-                // Clone the repo into the workspace
-                checkout scm
-            }
-        }
-
-
-        stage('Run inside Docker') {
-            steps {
-                script {
-                    // Run commands inside the container
-                    dockerImage.inside('-v /dev/shm:/dev/shm') {
-                        sh 'mvn clean install'
-                    }
-                }
-            }
-        }
+    stage('Checkout Code') {
+      steps {
+        checkout scm
+      }
     }
 
-    post {
-        always {
-            echo "Done"
+    stage('Run inside Docker') {
+      steps {
+        script {
+          dockerImage.inside('-v /dev/shm:/dev/shm') {
+            sh 'mvn clean install'
+          }
         }
+
+      }
     }
+
+  }
+  environment {
+    IMAGE_NAME = 'my-maven-chrome-image'
+  }
+  post {
+    always {
+      echo 'Done'
+    }
+
+  }
 }
