@@ -17,6 +17,7 @@ public class LocalExecutionStrategy implements TestExecutionStrategy{
             case "chrome":
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--incognito");
+                options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
                 LOGGER.info("Launched browser :: {}",config.getConfig().getUiConfigData().getBrowserType());
                 return new ChromeDriver(options);
             case "safari":
