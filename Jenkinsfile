@@ -10,17 +10,11 @@ pipeline {
       }
     }
 
-    stage('Checkout Code') {
-      steps {
-        checkout scm
-      }
-    }
-
     stage('Run inside Docker') {
       steps {
         script {
           dockerImage.inside('-v /dev/shm:/dev/shm') {
-            sh 'mvn clean install'
+            sh "mvn clean test -DSuiteXmlFile='testng.xml' "
           }
         }
 
