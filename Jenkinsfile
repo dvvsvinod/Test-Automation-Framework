@@ -18,8 +18,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         script{
-         sh "docker run -it -v /var/jenkins_home/workspace/Selenium-Docker_master:/app -w /app ${env.CUSTOM_IMAGE} bash"
-         sh "mvn clean test -DSuiteXmlFile=testng.xml"
+          sh "docker run --rm -v /var/jenkins_home/workspace/Selenium-Docker_master:/app -w /app maven-java-docker-chrome mvn clean test"
         }
 
       }
