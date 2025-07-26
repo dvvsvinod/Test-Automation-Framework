@@ -1,39 +1,40 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    CUSTOM_IMAGE = 'maven-java-docker-chrome'
-  }
-
-  stages {
-    stage('Build Custom Image') {
-      steps {
-        script {
-          sh "docker build -t ${env.CUSTOM_IMAGE} ."
-        }
-      }
+    environment {
+        HOST_WORKSPACE = "/Users/vinod.dvvs/jenkins_home/workspace/Selenium-Docker_master"
+        HOST_ALLURE_RESULTS = "/Users/vinod.dvvs/jenkins_home/allure-results"
+        DOCKER_IMAGE = "markhobson/maven-chrome:jdk-17"
     }
 
-
-    stage('Run Tests') {
-      steps {
-        script{
-        sh "docker run --rm -v /var/jenkins_home/allure-results:/allure-results maven-java-docker-chrome bash -c 'mvn clean test && cp -r target/allure-results/* /allure-results'"
+    stages {
+        stage('Checkout') {
+            steps {
+                // Replace with your SCM configuration
+                checkout scm
+            }
         }
 
-      }
+        stage('Run Maven Tests') {
+            steps {
+                script {
+                    sh """
+                    docker run --rm \
+                      --platform linux/amd64 \
+                      -v ${HOST_WORKSPACE}:/app \
+                      -v ${HOST_ALLURE_RESULTS}:/allure-results \
+                      -w /app \
+                      ${DOCKER_IMAGE} \
+                      bash -c "mvn clean test -DsuiteXmlFile=testng.xml && cp -r target/allure-results /allure-results"
+                    """
+                }
+            }
+        }
     }
 
-
-  }
-
-  post {
-    always {
-      allure([
-        includeProperties: false,
-        jdk: '',
-        results: [[path: 'allure-results']]
-      ])
+    post {
+        always {
+            echo 'Tests completed.'
+        }
     }
-  }
 }
