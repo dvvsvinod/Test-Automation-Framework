@@ -18,7 +18,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         script{
-        sh "docker run --rm -v /var/jenkins_home/workspace/Selenium-Docker_master:/app -v /var/jenkins_home/allure-results:/allure-results maven-java-docker-chrome bash -c 'mvn clean test && cp -r target/allure-results/* /allure-results'"
+        sh "docker run --rm -v /var/jenkins_home/allure-results:/allure-results maven-java-docker-chrome bash -c 'mvn clean test && cp -r target/allure-results/* /allure-results'"
         }
 
       }
