@@ -18,16 +18,22 @@ pipeline {
     stage('Run Tests') {
       steps {
         script{
-          sh "docker run --rm maven-java-docker-chrome mvn clean test"
+          sh "docker run --rm ${env.CUSTOM_IMAGE} mvn clean test"
         }
 
       }
     }
+
+
   }
 
   post {
     always {
-      echo 'Pipeline completed'
+      allure([
+        includeProperties: false,
+        jdk: '',
+        results: [[path: 'target/allure-results']]
+      ])
     }
   }
 }
