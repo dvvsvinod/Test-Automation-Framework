@@ -16,15 +16,12 @@ public class SampleStepDefinitions {
     @Given("User opens chrome browser")
     public void user_opens_chrome_browser() {
         DriverContext.getDriver().get("https://google.co.in");
-        if (true) { // Simulate a failure
-            throw new AssertionError("Test failed intentionally");
-        }
         ScreenshotUtil.saveScreenshot(DriverContext.getDriver());
 
     }
     @Given("User navigates to login page")
     public void user_navigates_to_login_page() {
-        Assert.assertEquals(DriverContext.getDriver().getCurrentUrl(),"");
+        Assert.assertEquals(DriverContext.getDriver().getCurrentUrl(),"https://www.google.com/");
     }
     @When("User enters valid credentials as {string} and {string}")
     public void user_enters_valid_credentials_as_and(String string, String string2) {
